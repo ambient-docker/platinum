@@ -36,7 +36,8 @@ services:
 
  sonar:
   hostname: sonar
-  build: ./sonar
+  #build: ./sonar
+  image: ambientdocker/docker-sonar
   ports:
    - "19000:9000"
    - "5432:5432"

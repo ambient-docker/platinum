@@ -6,15 +6,23 @@ RUN apt-get update \
       && rm -rf /var/lib/apt/lists/*
 RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
 
+RUN apt -y  update && \
+    apt -y  upgrade && \
+    apt -y install sudo apt-transport-https ca-certificates curl software-properties-common gnupg2 && \
+    curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add - && \
+    add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" && \
+    apt -y update && \
+    apt -y install docker-ce
+
 # Docker-In-Docker
 # getting the docker-cli
 # --- Attention: docker.sock needs to be mounted as volume in docker-compose.yml
 # see: https://issues.jenkins-ci.org/browse/JENKINS-35025
 # see: https://get.docker.com/builds/
 # see: https://wiki.jenkins-ci.org/display/JENKINS/CloudBees+Docker+Custom+Build+Environment+Plugin#CloudBeesDockerCustomBuildEnvironmentPlugin-DockerinDocker
-RUN curl -sSL -O https://get.docker.com/builds/Linux/x86_64/docker-latest.tgz && tar -xvzf docker-latest.tgz
+#RUN curl -sSL -O https://get.docker.com/builds/Linux/x86_64/docker-latest.tgz && tar -xvzf docker-latest.tgz
 #RUN mv docker/* /usr/bin/
-RUN cp -r docker/* /usr/bin/
+#RUN cp -r docker/* /usr/bin/
 
 # install all plugins
 
