@@ -63,6 +63,7 @@ services:
 
  jmeter:
   hostname: jmeter
+  command: tail -f /dev/null
   networks:
     - prodnetwork
   build: ./jmeter
